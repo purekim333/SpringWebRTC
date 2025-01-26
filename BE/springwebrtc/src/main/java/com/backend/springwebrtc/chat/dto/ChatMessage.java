@@ -1,4 +1,4 @@
-package com.backend.springwebrtc.chat.domain;
+package com.backend.springwebrtc.chat.dto;
 
 import lombok.Data;
 
