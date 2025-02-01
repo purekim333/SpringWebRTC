@@ -1,5 +1,12 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router';
+import { computed } from 'vue';
+import { useRoomStore } from '@/stores/RoomCounter';
+
+const roomStore = useRoomStore();
+
+// 토큰이 존재하면 로그인한 것으로 판단 (빈 문자열이 아니면 true)
+const isLoggedIn = computed(() => !!roomStore.getToken());
 </script>
 
 <template>
@@ -7,7 +14,14 @@ import { RouterLink, RouterView } from 'vue-router';
     <div class="wrapper">
       <nav>
         <RouterLink to="/">Home</RouterLink>
-        <RouterLink to="/login">로그인</RouterLink>
+        <template v-if="!isLoggedIn">
+          <RouterLink to="/login">로그인</RouterLink>
+        </template>
+        <template v-else>
+          <!-- 로그인 상태라면 프로필/로그아웃 링크 표시 (필요에 따라 컴포넌트를 연결) -->
+          <RouterLink to="/profile">프로필</RouterLink>
+          <RouterLink to="/logout">로그아웃</RouterLink>
+        </template>
         <RouterLink to="/rooms">방목록</RouterLink>
         <RouterLink to="/create">방생성</RouterLink>
       </nav>

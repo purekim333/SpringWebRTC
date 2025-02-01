@@ -1,7 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import CreateRoomView from '@/views/CreateRoomView.vue'
-import JoinRoomView from '@/views/JoinRoomView.vue'
 import LoginView from '@/views/LoginView.vue'
 
 const router = createRouter({
@@ -16,11 +15,6 @@ const router = createRouter({
       path: '/create',
       name: 'create',
       component: () => import('@/views/CreateRoomView.vue'), // Lazy Loading
-    },
-    {
-      path: '/join',
-      name: 'join',
-      component: JoinRoomView,
     },
     {
       path: '/login',

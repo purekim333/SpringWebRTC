@@ -28,9 +28,7 @@
   
   const handleJoin = async () => {
     try {
-      const userName = prompt('참여할 사용자 이름을 입력해주세요:');
-      if (!userName) return alert('사용자 이름은 필수입니다.');
-      const roomData = await roomStore.joinRoom(roomId, userName);
+      const roomData = await roomStore.joinRoom(roomId);
       router.push({ name: 'roomDetail', params: { roomId: roomId } });
     } catch (error) {
       console.error('방 참여 실패:', error);

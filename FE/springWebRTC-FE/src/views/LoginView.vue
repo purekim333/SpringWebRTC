@@ -1,9 +1,12 @@
 <script setup>
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
-import axios from 'axios';
+import { useRoomStore } from '@/stores/RoomCounter';
 
 const router = useRouter();
+const roomStore = useRoomStore();
+
+// 스토어에 정의된 login 메서드를 사용하므로, 로컬 상태는 최소화
 const username = ref('');
 const password = ref('');
 const errorMessage = ref('');
@@ -11,15 +14,9 @@ const errorMessage = ref('');
 const login = async () => {
   errorMessage.value = '';
   try {
-    // 백엔드 로그인 API 엔드포인트에 맞게 URL을 수정하세요.
-    const response = await axios.post('http://localhost:8080/api/v1/auth', {
-      username: username.value,
-      password: password.value,
-    });
-
-    // 예시: 응답에 토큰이 있다면 localStorage에 저장
-    localStorage.setItem('token', response.data.token);
-    // 로그인 성공 후 홈으로 이동하거나 원하는 페이지로 리다이렉트
+    // 스토어의 login 메서드 호출 (백엔드 로그인 API 호출 및 토큰 저장)
+    await roomStore.login(username.value, password.value);
+    // 로그인 성공 후 홈 페이지로 이동
     router.push('/');
   } catch (error) {
     errorMessage.value = error.response?.data?.message || '로그인 실패. 다시 시도해주세요.';
