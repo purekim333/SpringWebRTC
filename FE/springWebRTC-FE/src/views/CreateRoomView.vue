@@ -1,37 +1,26 @@
 <template>
-  <div>
-    <h1>방 만들기</h1>
-    <input v-model="roomName" placeholder="Enter room name" />
-    <button @click="createRoom">Create</button>
+  <div class="create-room-view">
+    <h1>방 생성</h1>
+    <!-- CreateRoomForm 컴포넌트 렌더링 -->
+    <CreateRoomForm />
   </div>
 </template>
 
-<script>
-import axios from 'axios';
-
-export default {
-  name: 'CreateRoomView',
-  data() {
-    return {
-      roomName: '', // 새로운 방 이름
-    };
-  },
-  methods: {
-    async createRoom() {
-      if (!this.roomName.trim()) {
-        alert('Room name is required.');
-        return;
-      }
-      try {
-        const response = await axios.post('http://localhost:8080/api/rooms', {
-          name: this.roomName,
-        });
-        const roomId = response.data.roomId;
-        this.$router.push(`/join-room/${roomId}`);
-      } catch (error) {
-        console.error('Failed to create room:', error);
-      }
-    },
-  },
-};
+<script setup>
+import CreateRoomForm from '@/components/CreateRoomForm.vue';
 </script>
+
+<style scoped>
+.create-room-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 2rem;
+}
+
+h1 {
+  font-size: 2rem;
+  color: #007bff;
+  margin-bottom: 1rem;
+}
+</style>

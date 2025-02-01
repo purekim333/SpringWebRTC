@@ -10,12 +10,12 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomeView,
+      component: () => import('@/views/HomeView.vue'), // Lazy Loading
     },
     {
       path: '/create',
       name: 'create',
-      component: CreateRoomView,
+      component: () => import('@/views/CreateRoomView.vue'), // Lazy Loading
     },
     {
       path: '/join',
@@ -26,8 +26,24 @@ const router = createRouter({
       path: '/login',
       name: 'login',
       component: LoginView,
-    }
+    },
+    {
+      path: '/rooms',
+      name: 'rooms',
+      component: () => import('@/views/RoomListView.vue'), // Lazy Loading
+    },
+    {
+      path: '/rooms/:roomId',
+      name: 'roomDetail',
+      component: () => import('@/views/RoomDetailView.vue')
+    },
   ],
-})
+});
 
-export default router
+router.beforeEach((to, from, next) => {
+  console.log(`Navigating to ${to.name} from ${from.name}`);
+  next();
+});
+
+
+export default router;
